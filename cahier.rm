@@ -1,0 +1,19 @@
+# Base de données SQL 
+
+    ## Adminer
+
+# Librairies et dependences installées dans ce projet
+
+    ## Autoloader // 
+
+    ## Altorouter // creation des routes 
+
+    ## Symfony Var demper // dd( ) et dump( ) de symfony
+ 
+    ## whoops  // Exeptions et erreurs
+
+    ## Librairie faker // remplir une base de donnée 
+        composer require fzaninotto/faker:1.8.0
+
+    ## Validateur de formulaires
+        composer require vlucas/valitron:1.4.5

@@ -45,4 +45,53 @@ final class CategoryTable extends Table
         
     }
 
+
+    public function all ()
+    {
+        $sql = "SELECT * FROM {$this->table} ORDER BY id DESC";
+        return $this->pdo->query($sql, PDO::FETCH_CLASS, $this->class)->fetchAll();
+    }
+
+
+    // public function create(Category $category): void
+    // {
+    //     $query = $this->pdo->prepare("INSERT INTO {$this->table} SET name = :name, slug = :slug");
+    //     $result = $query->execute([
+    //         'name' => $category->getName(),
+    //         'slug' => $category->getSlug(),
+    //     ]);
+    //     if($result === false)
+    //     {
+    //         throw new \Exception("Creation de la categorie inpossible");
+    //     }    
+    //     $category->setID($this->pdo->lastInsertId());
+            
+    // }
+
+    // public function delete(int $id): void
+    // {
+    //     $query = $this->pdo->prepare("DELETE FROM {$this->table} WHERE id= ?");
+    //     $result = $query->execute([$id]);
+    //     if($result === false)
+    //     {
+    //         throw new \Exception("la catégorie n° $id n'exisste pas:: Suppression inpossible");
+    //     }    
+            
+    // }
+
+    // public function update(Category $category): void
+    // {
+    //     $query = $this->pdo->prepare("UPDATE {$this->table} SET name = :name,  slug = :slug WHERE id= :id");
+    //     $result = $query->execute([
+    //         'name' => $category->getName(),
+    //         'slug' => $category->getSlug(),
+    //         'id' => $category->getID()
+    //     ]);
+    //     if($result === false)
+    //     {
+    //         throw new \Exception("la categorie ° {$category['id']} n'exisste pas:: Modification inpossible");
+    //     }    
+            
+    // }
+
 }

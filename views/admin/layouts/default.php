@@ -9,9 +9,13 @@
 <body class="d-flex flex-column h-100">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <a href="#" class="navbar-brand">Jawher Al Islam</a>
+        <ul class="navbar-nav">
+            <li class="nav-item"><a href="<?=  $router->url('admin_posts') ?>" class="nav-link">Articles</a></li>
+            <li class="nav-item"><a href="<?=  $router->url('admin_categories') ?>" class="nav-link">Catégories</a></li>
+        </ul>
     </nav>
     <div class="container mt-4">
- 
+
 
     <!-- //////////////  LA variable de la vue  /////////////  --> 
     <?= $content ?>

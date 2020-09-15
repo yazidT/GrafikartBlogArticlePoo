@@ -22,50 +22,32 @@ final class PostTable extends Table
     protected $table = 'post';
 
 
-    public function update(Post $post): void
+    public function updatePost(Post $post): void
     {
-        $query = $this->pdo->prepare("UPDATE {$this->table} SET name = :name, content = :content, slug = :slug, created_at = :date WHERE id= :id");
-        $result = $query->execute([
+        $this->update([
             'name' => $post->getName(),
             'content' => $post->getContent(),
             'slug' => $post->getSlug(),
-            'date' => $post->getCreatedAt()->format('Y-m-d H:i:s'),
+            'created_at' => $post->getCreatedAt()->format('Y-m-d H:i:s'),
             'id' => $post->getID()
-        ]);
-        if($result === false)
-        {
-            throw new \Exception("l'article n° {$post['id']} n'exisste pas:: Modification inpossible");
-        }    
+        ], $post->getID());
+        
             
     }
 
-    public function create(Post $post): void
+    public function createPost(Post $post): void
     {
-        $query = $this->pdo->prepare("INSERT INTO {$this->table} SET name = :name, content = :content, slug = :slug, created_at = :date");
-        $result = $query->execute([
+        $id = $this->create([
             'name' => $post->getName(),
             'content' => $post->getContent(),
             'slug' => $post->getSlug(),
-            'date' => $post->getCreatedAt()->format('Y-m-d H:i:s'),
+            'created_at' => $post->getCreatedAt()->format('Y-m-d H:i:s'),
         ]);
-        if($result === false)
-        {
-            throw new \Exception("Creation d'article inpossible");
-        }    
-        $post->setID($this->pdo->lastInsertId());
-            
+
+        $post->setID($id);
+
     }
 
-    public function delete(int $id): void
-    {
-        $query = $this->pdo->prepare("DELETE FROM {$this->table} WHERE id= ?");
-        $result = $query->execute([$id]);
-        if($result === false)
-        {
-            throw new \Exception("l'article n° $id n'exisste pas:: Suppression inpossible");
-        }    
-            
-    }
     public function findPaginated()
     {
         $paginatedQuery = new PaginatedQuery(

@@ -13,6 +13,8 @@ $pdo = Connection::getPDO();
 
 [$posts, $pagination] = (new PostTable($pdo))->findPaginated();
 
+$router->layouts = 'admin/layouts/default';
+
 $link = $router->url('admin_posts');
 
 

@@ -1,5 +1,5 @@
 <?php
-
+use App\Auth;
 use App\Connection;
 use App\Table\PostTable;
 use Valitron\Validator;
@@ -8,6 +8,7 @@ use App\Validators\PostValidator;
 use App\ObjectHelper;
 use App\Model\Post;
 
+Auth::check();
 
 $success = false;
 
@@ -34,7 +35,7 @@ if(!empty($_POST))
 
     if($v->validate())
     {
-        $postTable->create($post);
+        $postTable->createPost($post);
 
         header('location: '.$router->url('admin_post', [ 'id' => $post->getID() ] ) . '?created=1' );
         exit;

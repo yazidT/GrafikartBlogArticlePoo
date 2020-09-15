@@ -15,6 +15,9 @@ class Router
      */
     private $router;
 
+
+    public $layouts = 'layouts/default';
+
     public function __construct(string $viewPath)
     {
         $this->viewPath = $viewPath;
@@ -63,7 +66,7 @@ class Router
         
         
         
-        require $this->viewPath . DIRECTORY_SEPARATOR . 'layouts/default.php';
+        require $this->viewPath . DIRECTORY_SEPARATOR . $this->layouts. '.php';
         return $this;
     }
 }

@@ -1,31 +1,35 @@
 <?php
 use App\Auth;
+
 use App\Connection;
-use App\Table\PostTable;
+use App\Table\CategoryTable;
 use Valitron\Validator;
 use App\HTML\Form;
-use App\Validators\PostValidator;
+use App\Validators\CategoryValidator;
 use App\ObjectHelper;
-
-
 Auth::check();
+
+
+$router->layouts = 'admin/layouts/default';
 
 $pdo = Connection::getPDO();
 
-$postTable = new PostTable($pdo);
+$table = new CategoryTable($pdo);
 
-$post = $postTable->find($params['id']);
+$item = $table->find($params['id']);
 
 $success = false;
 
 $errors = [];
 
+$fields= ['name',  'slug'];
+
 if(!empty($_POST))
 {
     Validator::lang('fr');
-    $v = new PostValidator($_POST, $postTable, $post->getID());
+    $v = new CategoryValidator($_POST, $table, $item->getID());
 
-    ObjectHelper::hydrate($post, $_POST, ['name', 'content', 'slug', 'created_at']);
+    ObjectHelper::hydrate($item, $_POST, $fields);
 
 
 
@@ -33,14 +37,17 @@ if(!empty($_POST))
 
     if($v->validate())
     {
-        $postTable->updatePost($post);
+        $table->update([
+            'name' => $item->getName(),
+            'slug' => $item->getSlug()
+        ], $item->getID());
         $success = true;
     }else {
         $errors = $v->errors();
     }
 }
 
-$form = new Form($post, $errors);
+$form = new Form($item, $errors);
 ?>
 
 
@@ -56,6 +63,6 @@ $form = new Form($post, $errors);
     <div class="alert alert-success">L'article à bien été modifié</div>
 <?php endif ?>    
 
-<h1> Editer l'article : <?= $post->getName() ?></h1>
+<h1> Editer la catégorie : <?= $item->getName() ?></h1>
 
 <?php require '_form.php'; ?>
